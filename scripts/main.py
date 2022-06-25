@@ -11,6 +11,8 @@ line_width = 15
 board_rows = 3
 board_cols = 3
 
+player = 1
+
 # COLORS
 background_red = (255, 0, 0)
 background_color = (154, 100, 204)
@@ -43,7 +45,7 @@ def mark_square(row, col, player):
   board[row][col] = player
 
 def available_square(row, col):
-  return board[row] [col] == 0
+  return board[row][col] == 0
 
   # if board[row] [col] == 0:
   #   return True
@@ -60,7 +62,7 @@ def is_board_full():
   return True
 
 # False
-print(is_board_full())
+# print(is_board_full())
 
 # Marking all squares
 for row in range(board_rows):
@@ -68,7 +70,7 @@ for row in range(board_rows):
     mark_square( row, col, 1 )
 
 # Board is full - True
-print(is_board_full())    
+# print(is_board_full())    
 
 draw_lines()
 
@@ -77,5 +79,24 @@ while True:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       sys.exit()
+
+    if event.type == pygame.MOUSEBUTTONDOWN:
+
+      mouse_x = event.pos[0] # X
+      mouse_y = event.pos[1] # Y
+
+      clicked_row = int(mouse_y // 200)
+      clicked_col = int(mouse_x // 200)
+
+      if available_square( clicked_row, clicked_col ):
+        if player == 1:
+          mark_square( clicked_row, clicked_col, 1 )
+          player = 2
+
+        elif player == 2:
+          mark_square( clicked_row, clicked_col, 2 )
+          player = 1
+
+      print(board)
 
   pygame.display.update()
