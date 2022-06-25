@@ -1,4 +1,6 @@
+from operator import is_
 import pygame, sys
+import numpy as np
 
 pygame.init()
 
@@ -6,6 +8,8 @@ pygame.init()
 width = 600
 height = 600
 line_width = 15
+board_rows = 3
+board_cols = 3
 
 # COLORS
 background_red = (255, 0, 0)
@@ -13,8 +17,12 @@ background_color = (154, 100, 204)
 line_color = (108, 64, 160)
 
 screen = pygame.display.set_mode( (width, height) )
-pygame.display.set_caption('TIC🪨 TAC🧻 TOE✂️')
+pygame.display.set_caption('TIC TAC TOE')
 screen.fill( background_color )
+
+# BOARD
+board = np.zeros( (board_rows, board_cols) )
+# print(board)
 
 # pygame.draw.line( screen, background_red, (10, 10), (300, 300), 10 )
 
@@ -30,6 +38,37 @@ def draw_lines():
 
   # 2ª vertical
   pygame.draw.line( screen, line_color, (400, 20), (400, 580), line_width)
+
+def mark_square(row, col, player):
+  board[row][col] = player
+
+def available_square(row, col):
+  return board[row] [col] == 0
+
+  # if board[row] [col] == 0:
+  #   return True
+  # else:
+  #   return False
+
+
+def is_board_full():
+  for row in range(board_rows):
+    for col in range(board_cols):
+      if board[row] [col] == 0:
+        return False
+
+  return True
+
+# False
+print(is_board_full())
+
+# Marking all squares
+for row in range(board_rows):
+  for col in range(board_cols):
+    mark_square( row, col, 1 )
+
+# Board is full - True
+print(is_board_full())    
 
 draw_lines()
 
